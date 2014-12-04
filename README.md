@@ -1,17 +1,17 @@
 ### Setup
 ```
-$ ./initial_setup.sh
-$ cd rails_app
-$ rails new .
+$ ./initial_setup.sh              # Makes directories and copies unicorn.rb
+$ cd rails_app                    # CD into the generic rails_app directory
+$ rails new .                     # Create a new Rails app inside directory
+$ echo 'gem "unicorn"' >> Gemfile # Add unicorn to Gemfile
 $ bundle exec rake db:migrate
 ```
-Then add `gem "unicorn"` to your Gemfile.
 
 ### Development
 ```
-$ boot2docker start
-$ boot2docker ip
-$ fig up
+$ boot2docker start # Start boot2docker so Docker runs on Mac
+$ boot2docker ip    # Get the IP address of Docker containers
+$ fig up            # Start development environment
 ```
 Go to [ip_address]:3000 (ip address from `$ boot2docker ip`).
 
