@@ -8,11 +8,11 @@ $ echo 'gem "unicorn"' >> Gemfile # Add unicorn to Gemfile
 
 ### Development
 ```
-$ boot2docker start # Start boot2docker so Docker runs on Mac
-$ boot2docker ip    # Get the IP address of Docker containers
-$ fig up            # Start development environment
+$ vagrant up
+$ vagrant ssh core-01 -- -A       # SSH into the core
+$ systemctl status bstrap.service # Check the status of systemd unit
 ```
-Go to [ip_address]:3000 (ip address from `$ boot2docker ip`).
+Go to http://172.17.8.101:2375 to see the app
 
 ### Stop development processes
 ```

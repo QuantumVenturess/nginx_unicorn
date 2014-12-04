@@ -1,5 +1,15 @@
 #cloud-config
-
+# write_files:
+#   - path: /home/core/.dockercfg
+#     permissions: '0644'
+#     owner: core:core
+#     content: |
+#         {
+#           "docker.onmyblock.com:443": {
+#             "auth": "amVua2luczpvbm15YmxvY2tlcnMh",
+#             "email": "development@onmyblock.com"
+#           }
+#         }
 coreos:
   etcd:
     # https://discovery.etcd.io/new
@@ -10,20 +20,34 @@ coreos:
     public-ip: $public_ipv4
   units:
     - name: etcd.service
-    command: start
+      command: start
     - name: fleet.service
-    command: start
+      command: start
     - name: docker-tcp.socket
-    command: start
-    enable: true
-    content: |
-      [Unit]
-      Description=Docker Socket for the API
+      command: start
+      enable: true
+      content: |
+        [Unit]
+        Description=Docker Socket for the API
 
-      [Socket]
-      ListenStream=2375
-      Service=docker.service
-      BindIPv6Only=both
+        [Socket]
+        ListenStream=2375
+        Service=docker.service
+        BindIPv6Only=both
 
-      [Install]
-      WantedBy=sockets.target
+        [Install]
+        WantedBy=sockets.target
+
+    - name: bstrap.service
+      command: start
+      enable: true
+      content: |
+        [Unit]
+        Description=Bootstrap our application..
+        After=docker.service
+        Requires=docker.service
+
+        [Service]
+        TimeoutStartSec=0
+        ExecStartPre=/usr/bin/docker build -t web /home/core/share
+        ExecStart=/usr/bin/docker run -d -p 2375:80 web
