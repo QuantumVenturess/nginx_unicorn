@@ -3,6 +3,7 @@
 $ ./initial_setup.sh
 $ cd rails_app
 $ rails new .
+$ bundle exec rake db:migrate
 ```
 Then add `gem "unicorn"` to your Gemfile.
 
