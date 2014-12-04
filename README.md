@@ -4,6 +4,7 @@ $ ./initial_setup.sh              # Makes directories and copies unicorn.rb
 $ cd rails_app                    # CD into the generic rails_app directory
 $ rails new .                     # Create a new Rails app inside directory
 $ echo 'gem "unicorn"' >> Gemfile # Add unicorn to Gemfile
+$ bundle exec rake db:migrate
 ```
 
 ### Development
